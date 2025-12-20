@@ -1,0 +1,8 @@
+body{
+    background-color:darksalmon;
+    color: white;
+}
+.card-body {
+    background-color: rgb(235, 145, 115);
+    border: outset rgb(235, 145, 115); 
+}
