@@ -2,7 +2,19 @@ body{
     background-color:darksalmon;
     color: white;
 }
-.card-body {
+.card {
     background-color: rgb(235, 145, 115);
     border: outset rgb(235, 145, 115); 
+}
+.btn {
+    width:fit-content;
+    color: white;
+    background-color:rgb(244, 103, 56);
+    border: none;
+}
+.btn:hover {
+    width:fit-content;
+    color: rgb(244, 103, 56);
+    background-color:white;
+    border: none;
 }
