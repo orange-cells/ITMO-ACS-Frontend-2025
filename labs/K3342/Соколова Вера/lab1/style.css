@@ -1,10 +1,12 @@
 body{
     background-color:darksalmon;
     color: white;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 .card {
     background-color: rgb(235, 145, 115);
     border: outset rgb(235, 145, 115); 
+    color: white;
 }
 .btn {
     width:fit-content;
@@ -17,4 +19,31 @@ body{
     color: rgb(244, 103, 56);
     background-color:white;
     border: none;
+}
+option:focus {
+    background-color: aqua;;
+}
+.list-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.list-group-item {
+    border: none;
+    background-color: darksalmon;
+    color: white;
+}
+.form-check-input:checked {
+    background-color: rgb(244, 103, 56);
+    border-color: rgb(244, 103, 56);
+}
+.form-select:focus {
+    border-color: rgb(244, 103, 56);
+    box-shadow: 0 0 0 .25rem rgba(244, 103, 56, 0.25);
+}
+.items-list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
 }
