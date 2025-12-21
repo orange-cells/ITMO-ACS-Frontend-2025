@@ -47,3 +47,6 @@ option:focus {
     flex-direction: row;
     justify-content: flex-start;
 }
+.badge {
+    background-color: rgb(244, 103, 56);
+}
