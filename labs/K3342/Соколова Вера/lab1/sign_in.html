@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,14 +10,14 @@
 <body>
     <div class="d-flex align-items-center justify-content-center flex-column mb-3" style="height: 100vh;">
     <div class="card text-center mb-3" style="width: 25rem; height: 25rem; background-color:darksalmon; padding: 5%; justify-content: center;">
-        <form, style="color: white;">
+        <form id="signInForm" style="color: white;">
         <div class="mb-3">
             <label for="inputEmail1" class="form-label">электронная почта</label>
-            <input type="email" class="form-control" id="inputEmail1" aria-describedby="emailHelp">
+            <input type="email" class="form-control" id="inputEmail1" aria-describedby="emailHelp" required>
         </div>
         <div class="mb-3">
             <label for="inputPassword1" class="form-label">пароль</label>
-            <input type="password" class="form-control" id="inputPassword1">
+            <input type="password" class="form-control" id="inputPassword1" required>
         </div>
         <button type="submit" class="btn btn-primary">вход</button>
         </form>
@@ -25,4 +25,27 @@
     <a href="index.html" class="btn btn-primary">назад</a>
     </div>
 </body>
+<script>
+    document.getElementById('signInForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const email = document.getElementById('inputEmail1').value.trim();
+    const password = document.getElementById('inputPassword1').value;
+
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(u => u.email === email);
+    
+    if (user) {
+        if (password == user.password) {
+            setTimeout(() => {
+                window.location.href = 'main_page.html';
+            }, 1000);
+        } else {
+            alert('Пароль введен неправильно');
+        }
+    } else {
+        alert('Такого пользователя не существует :(');  
+    }
+    })
+</script>
 </html>
