@@ -53,15 +53,17 @@
     if (user) {
         alert('Пользователь с такой почтой уже зарегистрирован')
     } else {
-        users.push({name: name,
+        let newUser = {name: name,
                         email: email,
                         password: password,
                         favourites: [],
-                        recipes: [] });
-            localStorage.setItem('users', JSON.stringify(users));
-            setTimeout(() => {
-                window.location.href = 'main_page.html';
-            }, 1000);
+                        recipes: [] };
+        users.push(newUser);
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('currentUser', JSON.stringify(newUser));
+        setTimeout(() => {
+            window.location.href = 'main_page.html';
+        }, 1000);
     }    
     })
 </script>

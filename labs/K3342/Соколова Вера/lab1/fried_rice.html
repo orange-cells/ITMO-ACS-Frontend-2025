@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <title>жареный рис - рецептуар</title>
-    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -14,7 +14,7 @@
             <a class="navbar-brand" href="main_page.html" style="background-color: salmon; padding: 10px; color: white;border-radius: 50%;">рецептуар</a>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">личный кабинет</a>
+                <a class="nav-link active" aria-current="page" href="profile.html">личный кабинет</a>
                 </li>
             </ul>
         </div>
@@ -22,11 +22,16 @@
     </header>
 
     <main>
-        <li class="list-group-item d-flex justify-content-left align-items-center" style="padding: 2% 5% 0; gap: 10px">
-            жареный рис
-            <span class="badge" style="background-color: rgb(244, 103, 56);">сложность: надо постараться</span>
-        </li>
-
+        <div class="d-flex justify-content-between align-items-center" style="padding: 2% 5% 0; gap: 10px;">
+            <li class="list-group-item d-flex justify-content-left align-items-center" style="padding: 2% 5% 0; gap: 10px">
+                жареный рис
+                <span class="badge" style="background-color: rgb(244, 103, 56);">сложность: надо постараться</span>
+            </li>
+            <button id="likeButton" class="btn btn-outline-danger">
+                <i class="far fa-heart"></i> <!-- Пустое сердце по умолчанию -->
+            </button>
+        </div> 
+        
             <div class="container-ingr" style="display: flex; flex-wrap: wrap; padding: 5%; gap: 20px;">
             <img src="images/fried_rice.png" style="width: 20rem; border-radius: 8%;">
             <div class="card-body">
@@ -69,5 +74,44 @@
     </div>
 
     </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const likeButton = document.getElementById('likeButton');
+            const recId = "rec3";
+
+            let cu = JSON.parse(localStorage.getItem('currentUser'));
+            let likedRecipes = cu.favourites;
+
+            let users = JSON.parse(localStorage.getItem('users')).filter(user => user.email !== cu.email);
+
+            function updateLikeIcon() {
+                const isLiked = likedRecipes.includes(recId);
+                const icon = likeButton.querySelector('i');
+                if (isLiked) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                }
+            }
+
+            likeButton.addEventListener('click', () => {
+                const isLiked = likedRecipes.includes(recId);
+                if (isLiked) {
+                    likedRecipes = likedRecipes.filter(id => id !== recId);
+                } else {
+                    likedRecipes.push(recId);
+                }
+                cu.favourites = likedRecipes;
+                users.push(cu);
+                localStorage.setItem('currentUser', JSON.stringify(cu));
+                localStorage.setItem('users', JSON.stringify(users));
+                updateLikeIcon();
+            });
+            updateLikeIcon();
+        });
+        console.log(localStorage)
+    </script>
 </body>
 </html>

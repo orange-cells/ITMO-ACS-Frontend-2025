@@ -39,6 +39,7 @@
         if (password == user.password) {
             setTimeout(() => {
                 window.location.href = 'main_page.html';
+                localStorage.setItem('currentUser', JSON.stringify(user));
             }, 1000);
         } else {
             alert('Пароль введен неправильно');
