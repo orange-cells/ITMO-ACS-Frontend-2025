@@ -1,5 +1,5 @@
 body{
-    background-color:darksalmon;
+    background-color:#e9967a;
     color: white;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
@@ -50,3 +50,10 @@ option:focus {
 .badge {
     background-color: rgb(244, 103, 56);
 }
+.nav-tabs .nav-link {
+    color: white;
+}
+.nav-tabs .nav-link.active {
+  color: rgb(244, 103, 56); /* Red color for active tab text */
+}
+

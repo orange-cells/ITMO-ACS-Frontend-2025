@@ -20,4 +20,23 @@
     </div>
     </div>
 </body>
+<script>
+    const existingRecipes = [{
+        recId: 'rec1',
+        link: 'beer_soup.html',
+        name: 'пивной суп'
+    }, {
+        recId: 'rec2',
+        link: 'fried_rice.html',
+        name: 'жареный рис'
+    }, {
+        recId: 'rec3',
+        link: 'cake.html',
+        name: 'торт "Карпатка"'
+    }];
+
+    if (!(localStorage.getItem('existingRecipes'))) {
+    localStorage.setItem('existingRecipes', JSON.stringify(existingRecipes));
+    }
+</script>
 </html>
