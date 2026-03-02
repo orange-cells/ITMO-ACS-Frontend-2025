@@ -14,7 +14,7 @@
             <a class="navbar-brand" href="main_page.html" style="background-color: salmon; padding: 10px; color: white;border-radius: 50%;">рецептуар</a>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">личный кабинет</a>
+                <a class="nav-link active" aria-current="page" href="profile.html">личный кабинет</a>
                 </li>
             </ul>
         </div>
@@ -31,6 +31,7 @@
             <div class="mb-3">
             <label for="selectDishType" class="form-label">тип блюда</label>
             <select id="selectDishType" class="form-select">
+                <option>любой</option>
                 <option>суп</option>
                 <option>второе</option>
                 <option>десерт</option>
@@ -40,36 +41,15 @@
             <div class="mb-3">
             <label for="selectComplexity" class="form-label">сложность</label>
             <select id="selectComplexity" class="form-select">
+                <option>любая</option>
                 <option>сложно</option>
                 <option>надо постараться</option>
                 <option>легко</option>
             </select>
             </div>
             
-            <p>ингредиенты</p>
-            <ul class="list-group", style="flex-wrap: wrap;">
-            <li class="list-group-item">
-                <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox">
-                <label class="form-check-label" for="firstCheckbox">морковь</label>
-            </li>
-            <li class="list-group-item">
-                <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox">
-                <label class="form-check-label" for="secondCheckbox">молоко</label>
-            </li>
-            <li class="list-group-item">
-                <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox">
-                <label class="form-check-label" for="thirdCheckbox">рис</label>
-            </li>
-            <li class="list-group-item">
-                <input class="form-check-input me-1" type="checkbox" value="" id="forthCheckbox">
-                <label class="form-check-label" for="forthCheckbox">лук</label>
-            </li>
-            <li class="list-group-item">
-                <input class="form-check-input me-1" type="checkbox" value="" id="fifthCheckbox">
-                <label class="form-check-label" for="fifthCheckbox">яйца</label>
-            </li>
-            </ul>
-
+            <p>поиск по названию</p>
+            <input type="text" id="searchInput" class="form-control" placeholder="пишите сюда">
             <p></p>
             <button type="submit" class="btn btn-primary">поиск</button>
         </fieldset>
@@ -80,34 +60,63 @@
         <div class="catalog" style="padding: 10px;">
             <h1>рецепты</h1>
             <div class="items-list">
-                <div class="card" id="rec1" style="width: 18rem;">
-                <img src="images/beer_soup.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">пивной суп</h5>
-                    <p class="card-text">прикольно с сухариками</p>
-                    <a href="beer_soup.html" class="btn btn-primary">рецепт</a>
-                </div>
-                </div>
-
-                <div class="card" id="rec2" style="width: 18rem;">
-                <img src="images/fried_rice.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">жареный рис</h5>
-                    <p class="card-text">вкусно и сытно</p>
-                    <a href="fried_rice.html" class="btn btn-primary">рецепт</a>
-                </div>
+                <div class="card" id="rec1" dish-type="суп" dish-complexity="легко" style="width: 18rem;">
+                    <img src="images/beer_soup.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">пивной суп</h5>
+                        <p class="card-text">прикольно с сухариками</p>
+                        <a href="beer_soup.html" class="btn btn-primary">рецепт</a>
+                    </div>
                 </div>
 
-                <div class="card" id="rec3" style="width: 18rem;">
-                <img src="images/cake.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">торт "Карпатка"</h5>
-                    <p class="card-text">много крема и глазури</p>
-                    <a href="cake.html" class="btn btn-primary">рецепт</a>
+                <div class="card" id="rec2" dish-type="второе" dish-complexity="надо постараться" style="width: 18rem;">
+                    <img src="images/fried_rice.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">жареный рис</h5>
+                        <p class="card-text">вкусно и сытно</p>
+                        <a href="fried_rice.html" class="btn btn-primary">рецепт</a>
+                    </div>
                 </div>
+
+                <div class="card" id="rec3" dish-type="десерт" dish-complexity="сложно" style="width: 18rem;">
+                    <img src="images/cake.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">торт "Карпатка"</h5>
+                        <p class="card-text">много крема и глазури</p>
+                        <a href="cake.html" class="btn btn-primary">рецепт</a>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
+
+   <script>
+        const filterForm = document.querySelector('form');
+        const recipeCards = document.querySelectorAll('.catalog .card');
+
+        filterForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const dishType = document.getElementById('selectDishType').value.toLowerCase();
+            const dishComplexity = document.getElementById('selectComplexity').value.toLowerCase();
+            const searchText = document.getElementById('searchInput').value.toLowerCase().trim();
+
+            recipeCards.forEach(card => {
+                const cardType = card.getAttribute('dish-type').toLowerCase();
+                const cardComplexity = card.getAttribute('dish-complexity').toLowerCase();
+                const cardTitle = card.querySelector('.card-title').textContent.toLowerCase();
+
+                const matchesType = (dishType === 'любой' || cardType === dishType);
+                const matchesComplexity = (dishComplexity === 'любая' || cardComplexity === complexityValue);
+                const matchesSearch = cardTitle.includes(searchText);
+
+                if (matchesType && matchesComplexity && matchesSearch) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
