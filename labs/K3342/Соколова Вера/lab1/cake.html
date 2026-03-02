@@ -24,7 +24,7 @@
 
     <main>
         <div class="d-flex justify-content-between align-items-center" style="padding: 2% 5% 0; gap: 10px;">
-            <li class="list-group-item d-flex justify-content-left align-items-center" recipe-id="rec2" style="padding: 2% 5% 0; gap: 10px">
+            <li class="list-group-item d-flex justify-content-left align-items-center" recipe-id="rec3" style="padding: 2% 5% 0; gap: 10px">
             торт "Карпатка"
             <span class="badge" style="background-color: rgb(244, 103, 56);">сложность: сложно</span>
         </li>
@@ -100,10 +100,11 @@
     </div>
 
     </main>
+    <script src="api.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const likeButton = document.getElementById('likeButton');
-            const recId = "rec2";
+            const recId = "rec3";
 
             let cu = JSON.parse(localStorage.getItem('currentUser'));
             let likedRecipes = cu.favourites;
@@ -122,6 +123,35 @@
                 }
             }
 
+            async function toggleLike(recipeId) {
+                try {
+                    let localUser = JSON.parse(localStorage.getItem('currentUser'));
+                    const res = await fetch(`http://localhost:3000/users?email=${localUser.email}`);
+                    const users = await res.json();
+                    const serverUser = users[0];
+
+                    if (!serverUser) {
+                        alert("Пользователь не найден в базе");
+                        return;
+                    }
+
+                    const userId = serverUser.id;
+                    let liked = serverUser.favourites || [];
+                                
+                    if (liked.includes(recipeId)) {
+                        liked = liked.filter(id => id !== recipeId);
+                    } else {
+                        liked.push(recipeId);
+                    }
+
+                    await api.updateUser(userId, { favourites: liked });                    
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+
+
             likeButton.addEventListener('click', () => {
                 const isLiked = likedRecipes.includes(recId);
                 if (isLiked) {
@@ -134,10 +164,10 @@
                 localStorage.setItem('currentUser', JSON.stringify(cu));
                 localStorage.setItem('users', JSON.stringify(users));
                 updateLikeIcon();
+                toggleLike(recId);
             });
             updateLikeIcon();
         });
-        console.log(localStorage)
     </script>
 </body>
 </html>

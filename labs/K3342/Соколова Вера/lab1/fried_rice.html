@@ -75,10 +75,11 @@
     </div>
 
     </main>
+    <script src="api.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const likeButton = document.getElementById('likeButton');
-            const recId = "rec3";
+            const recId = "rec2";
 
             let cu = JSON.parse(localStorage.getItem('currentUser'));
             let likedRecipes = cu.favourites;
@@ -97,6 +98,35 @@
                 }
             }
 
+            async function toggleLike(recipeId) {
+                try {
+                    let localUser = JSON.parse(localStorage.getItem('currentUser'));
+                    const res = await fetch(`http://localhost:3000/users?email=${localUser.email}`);
+                    const users = await res.json();
+                    const serverUser = users[0];
+
+                    if (!serverUser) {
+                        alert("Пользователь не найден в базе");
+                        return;
+                    }
+
+                    const userId = serverUser.id;
+                    let liked = serverUser.favourites || [];
+                                
+                    if (liked.includes(recipeId)) {
+                        liked = liked.filter(id => id !== recipeId);
+                    } else {
+                        liked.push(recipeId);
+                    }
+
+                    await api.updateUser(userId, { favourites: liked });                    
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+
+
             likeButton.addEventListener('click', () => {
                 const isLiked = likedRecipes.includes(recId);
                 if (isLiked) {
@@ -109,10 +139,10 @@
                 localStorage.setItem('currentUser', JSON.stringify(cu));
                 localStorage.setItem('users', JSON.stringify(users));
                 updateLikeIcon();
+                toggleLike(recId);
             });
             updateLikeIcon();
         });
-        console.log(localStorage)
     </script>
 </body>
 </html>
