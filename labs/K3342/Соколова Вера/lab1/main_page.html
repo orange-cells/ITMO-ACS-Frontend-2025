@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="основная страница сайта">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <title>рецептуар</title>
     <link href="style.css" rel="stylesheet">
@@ -98,9 +99,9 @@
 
             container.innerHTML = recipes.map(recipe => `
                 <div class="card" dish-type="${recipe.type}" dish-complexity="${recipe.complexity}" style="width: 18rem;">
-                    <img src="${recipe.image}" class="card-img-top">
+                    <img src="${recipe.image}" class="card-img-top" alt="изображение для рецепта">
                     <div class="card-body">
-                        <h5 class="card-title">${recipe.title}</h5>
+                        <h2 class="card-title">${recipe.title}</h2>
                         <p class="card-text">${recipe.description}</p>
                         <a href="${recipe.link}" class="btn btn-primary">рецепт</a>
                     </div>
