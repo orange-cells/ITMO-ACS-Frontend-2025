@@ -9,6 +9,9 @@ body{
     border: outset rgb(235, 145, 115); 
     color: white;
 }
+.card-body {
+    background-color: #e9967a;
+}
 .btn {
     width:fit-content;
     color: white;
@@ -56,6 +59,48 @@ option:focus {
     color: white;
 }
 .nav-tabs .nav-link.active {
-  color: rgb(244, 103, 56); /* Red color for active tab text */
+  color: rgb(244, 103, 56);
 }
 
+body, .card, .navbar, .form-control, .form-select {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+[data-bs-theme="dark"] body {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+[data-bs-theme="dark"] .card {
+    background-color: #4a2c24 !important; 
+}
+[data-bs-theme="dark"] .card-body {
+    background-color: #4a2c24 !important; 
+}
+[data-bs-theme="dark"] .container-fluid {
+    background-color: #121212 !important; 
+}
+[data-bs-theme="dark"] .navbar {
+    background-color: #121212 !important; 
+}
+[data-bs-theme="dark"] .filter-card {
+    background-color: #4a2c24 !important;
+    color: white;
+}
+[data-bs-theme="dark"] .list-group-item {
+    background-color: #4a2c24 !important;
+    color: white;
+}
+[data-bs-theme="dark"] .navbar-brand {
+    background-color: #4a2c24 !important;
+    color: white;
+}
+[data-bs-theme="dark"] #profile-card {
+    background-color: #121212 !important; 
+}
+#themeIcon {
+    pointer-events: none;
+}
+.login-card {
+    background-color: darksalmon !important;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}

@@ -8,6 +8,15 @@
     <link href="style.css" rel="stylesheet">
     <title>рецептуар</title>
 </head>
+<header>
+    <div class="container-fluid" style="background-color: #e9967a; padding-top: 10px; padding-bottom: 10px;">
+        <div class="d-flex align-items-center" style="justify-content: flex-end;">
+            <button id="themeToggle" class="btn btn-outline-secondary btn-sm" title="переключить тему">
+                <span id="themeIcon">🌙</span>
+            </button>
+        </div>
+    </div>
+</header>
 <body>
     <div class="d-flex align-items-center justify-content-center flex-column mb-3" style="height: 100vh;">
     <div class="card text-center mb-3" style="width: 25rem; height: 25rem; background-color:darksalmon;">
@@ -22,22 +31,24 @@
     </div>
 </body>
 <script>
-    const existingRecipes = [{
-        recId: 'rec1',
-        link: 'beer_soup.html',
-        name: 'пивной суп'
-    }, {
-        recId: 'rec2',
-        link: 'fried_rice.html',
-        name: 'жареный рис'
-    }, {
-        recId: 'rec3',
-        link: 'cake.html',
-        name: 'торт "Карпатка"'
-    }];
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const htmlElement = document.documentElement;
 
-    if (!(localStorage.getItem('existingRecipes'))) {
-    localStorage.setItem('existingRecipes', JSON.stringify(existingRecipes));
-    }
+    const applyTheme = (theme) => {
+        htmlElement.setAttribute('data-bs-theme', theme);
+        localStorage.setItem('theme', theme);
+        themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+    };
+
+    // Загружаем сохраненную тему
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    applyTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const newTheme = htmlElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(newTheme);
+    });
+
 </script>
 </html>
