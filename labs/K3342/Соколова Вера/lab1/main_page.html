@@ -12,15 +12,16 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="main_page.html" style="background-color: salmon; padding: 10px; color: white;border-radius: 50%;">рецептуар</a>
+            <a class="navbar-brand" href="main_page.html"  style="background-color: salmon; padding: 10px; color: white;border-radius: 50%;">рецептуар</a>
             <div class="d-flex align-items-center">
-                <ul class="navbar-nav me-3">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="profile.html">личный кабинет</a>
-                    </li>
-                </ul>
-                <button id="themeToggle" class="btn btn-outline-secondary btn-sm" title="переключить тему">
-                    <span id="themeIcon">🌙</span>
+                <a class="nav-link me-3" href="profile.html">
+                    <svg class="icon"><use href="images\sprite.svg#icon-user"></use></svg>
+                    личный кабинет
+                </a>
+                <button id="themeToggle" class="btn btn-outline-secondary">
+                    <svg class="icon" id="themeIconSvg">
+                        <use href="images\sprite.svg#icon-moon"></use>
+                    </svg>
                 </button>
             </div>
         </div>
@@ -55,9 +56,13 @@
             </div>
             
             <p>поиск по названию</p>
-            <input type="text" id="searchInput" class="form-control" placeholder="пишите сюда">
-            <p></p>
-            <button type="submit" class="btn btn-primary">поиск</button>
+            <div class="input-group">
+                <span class="input-group-text">
+                    <svg class="icon"><use href="images/sprite.svg#icon-search"></use></svg>
+                </span>
+                <input type="text" id="searchInput" class="form-control" placeholder="пишите сюда">
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin-top: 10px;">поиск</button>
         </fieldset>
         </form>
         </div>
@@ -71,33 +76,6 @@
 
     <script src="api.js"></script>
     <script>
-        const filterForm = document.querySelector('form');
-        const recipeCards = document.querySelectorAll('.catalog .card');
-
-        filterForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const dishType = document.getElementById('selectDishType').value.toLowerCase();
-            const dishComplexity = document.getElementById('selectComplexity').value.toLowerCase();
-            const searchText = document.getElementById('searchInput').value.toLowerCase().trim();
-
-            recipeCards.forEach(card => {
-                const cardType = card.getAttribute('dish-type').toLowerCase();
-                const cardComplexity = card.getAttribute('dish-complexity').toLowerCase();
-                const cardTitle = card.querySelector('.card-title').textContent.toLowerCase();
-
-                const matchesType = (dishType === 'любой' || cardType === dishType);
-                const matchesComplexity = (dishComplexity === 'любая' || cardComplexity === complexityValue);
-                const matchesSearch = cardTitle.includes(searchText);
-
-                if (matchesType && matchesComplexity && matchesSearch) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-
         async function loadCatalog() {
             const container = document.getElementById('catalog-container');
             const recipes = await api.getRecipes();
@@ -115,14 +93,46 @@
         }
         loadCatalog();
 
+        const filterForm = document.querySelector('form');
+
+        filterForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const dishType = document.getElementById('selectDishType').value.toLowerCase();
+            const dishComplexity = document.getElementById('selectComplexity').value.toLowerCase();
+            const searchText = document.getElementById('searchInput').value.toLowerCase().trim();
+            const recipeCards = document.querySelectorAll('.catalog .card');
+
+            recipeCards.forEach(card => {
+                const cardType = card.getAttribute('dish-type').toLowerCase();
+                const cardComplexity = card.getAttribute('dish-complexity').toLowerCase();
+                const cardTitle = card.querySelector('.card-title').textContent.toLowerCase();
+
+                // ИСПРАВЛЕНО: Добавлены операторы || и исправлена переменная dishComplexity
+                const matchesType = (dishType === 'любой' || cardType === dishType);
+                const matchesComplexity = (dishComplexity === 'любая' || cardComplexity === dishComplexity);
+                const matchesSearch = cardTitle.includes(searchText);
+
+                if (matchesType && matchesComplexity && matchesSearch) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
         const themeToggle = document.getElementById('themeToggle');
+        const themeIconUse = document.querySelector('#themeIconSvg use');
         const htmlElement = document.documentElement;
 
         const applyTheme = (theme) => {
             htmlElement.setAttribute('data-bs-theme', theme);
             localStorage.setItem('theme', theme);
-            const icon = document.getElementById('themeIcon');
-            if (icon) icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+            if (theme === 'dark') {
+                themeIconUse.setAttribute('href', 'images/sprite.svg#icon-sun');
+            } else {
+                themeIconUse.setAttribute('href', 'images/sprite.svg#icon-moon');
+            }
         };
 
         const savedTheme = localStorage.getItem('theme') || 'light';

@@ -11,9 +11,11 @@
 <header>
     <div class="container-fluid" style="background-color: #e9967a; padding-top: 10px;">
         <div class="d-flex align-items-center" style="justify-content: flex-end;">
-            <button id="themeToggle" class="btn btn-outline-secondary btn-sm" title="переключить тему">
-                <span id="themeIcon">🌙</span>
-            </button>
+            <button id="themeToggle" class="btn btn-outline-secondary">
+                    <svg class="icon" id="themeIconSvg">
+                        <use href="images\sprite.svg#icon-moon"></use>
+                    </svg>
+                </button>
         </div>
     </div>
 </header>
@@ -60,23 +62,27 @@
     });
 
     const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = document.getElementById('themeIcon');
+    const themeIconUse = document.querySelector('#themeIconSvg use');
     const htmlElement = document.documentElement;
 
     const applyTheme = (theme) => {
         htmlElement.setAttribute('data-bs-theme', theme);
         localStorage.setItem('theme', theme);
-        themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        if (theme === 'dark') {
+            themeIconUse.setAttribute('href', 'images/sprite.svg#icon-sun');
+        } else {
+            themeIconUse.setAttribute('href', 'images/sprite.svg#icon-moon');
+        }
     };
 
-    // Загружаем сохраненную тему
     const savedTheme = localStorage.getItem('theme') || 'light';
     applyTheme(savedTheme);
 
-    themeToggle.addEventListener('click', () => {
-        const newTheme = htmlElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
-        applyTheme(newTheme);
-    });
-
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const newTheme = htmlElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+        });
+    }
 </script>
 </html>

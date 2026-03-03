@@ -13,15 +13,16 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="main_page.html" style="background-color: salmon; padding: 10px; color: white;border-radius: 50%;">рецептуар</a>
+            <a class="navbar-brand" href="main_page.html"  style="background-color: salmon; padding: 10px; color: white;border-radius: 50%;">рецептуар</a>
             <div class="d-flex align-items-center">
-                <ul class="navbar-nav me-3">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="profile.html">личный кабинет</a>
-                    </li>
-                </ul>
-                <button id="themeToggle" class="btn btn-outline-secondary btn-sm" title="переключить тему">
-                    <span id="themeIcon">🌙</span>
+                <a class="nav-link me-3" href="profile.html">
+                    <svg class="icon"><use href="images\sprite.svg#icon-user"></use></svg>
+                    личный кабинет
+                </a>
+                <button id="themeToggle" class="btn btn-outline-secondary">
+                    <svg class="icon" id="themeIconSvg">
+                        <use href="images\sprite.svg#icon-moon"></use>
+                    </svg>
                 </button>
             </div>
         </div>
@@ -176,13 +177,17 @@
         });
 
         const themeToggle = document.getElementById('themeToggle');
+        const themeIconUse = document.querySelector('#themeIconSvg use');
         const htmlElement = document.documentElement;
 
         const applyTheme = (theme) => {
             htmlElement.setAttribute('data-bs-theme', theme);
             localStorage.setItem('theme', theme);
-            const icon = document.getElementById('themeIcon');
-            if (icon) icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+            if (theme === 'dark') {
+                themeIconUse.setAttribute('href', 'images/sprite.svg#icon-sun');
+            } else {
+                themeIconUse.setAttribute('href', 'images/sprite.svg#icon-moon');
+            }
         };
 
         const savedTheme = localStorage.getItem('theme') || 'light';
