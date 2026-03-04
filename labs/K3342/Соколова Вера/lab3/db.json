@@ -1,0 +1,50 @@
+{
+  "recipes": [
+    {
+      "id": "rec1",
+      "title": "пивной суп",
+      "description": "прикольно с сухариками",
+      "type": "суп",
+      "complexity": "легко",
+      "link": "beer_soup.html",
+      "image": "images/beer_soup.png"
+    },
+    {
+      "id": "rec2",
+      "title": "жареный рис",
+      "description": "вкусно и сытно",
+      "type": "второе",
+      "complexity": "надо постараться",
+      "link": "fried_rice.html",
+      "image": "images/fried_rice.png"
+    },
+    {
+      "id": "rec3",
+      "title": "торт \"Карпатка\"",
+      "description": "много крема и глазури",
+      "type": "десерт",
+      "complexity": "легко",
+      "link": "cake.html",
+      "image": "images/cake.png"
+    }
+  ],
+  "users": [
+    {
+      "name": "Вера",
+      "email": "vera@gmail.com",
+      "password": "1111",
+      "favourites": [
+        "rec2"
+      ],
+      "recipes": [],
+      "id": "eb54"
+    },
+    {
+      "name": "user",
+      "email": "user@gmail.com",
+      "password": "password",
+      "favourites": [],
+      "recipes": [],
+      "id": "7054"
+    }
+  ]}
