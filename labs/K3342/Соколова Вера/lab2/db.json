@@ -22,7 +22,7 @@
       "id": "rec3",
       "title": "торт \"Карпатка\"",
       "description": "много крема и глазури",
-      "type": "суп",
+      "type": "десерт",
       "complexity": "легко",
       "link": "cake.html",
       "image": "images/cake.png"
@@ -34,7 +34,6 @@
       "email": "vera@gmail.com",
       "password": "1111",
       "favourites": [
-        "rec1",
         "rec3"
       ],
       "recipes": [],
